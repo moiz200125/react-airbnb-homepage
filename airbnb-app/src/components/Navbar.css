@@ -30,3 +30,12 @@
     background-color: #eee;
   }
   
+  @media (max-width: 768px) {
+    .navbar__links a {
+      display: none;
+    }
+    .navbar__user-menu button {
+      font-size: 12px;
+    }
+  }
+  
