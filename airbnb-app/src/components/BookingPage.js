@@ -1,48 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 const BookingPage = () => {
-    const { id } = useParams();
-    const [listing, setListing] = useState(null);
-    const [bookingDetails, setBookingDetails] = useState({
+    const { id } = useParams(); // Fetch the listing ID
+    const [formData, setFormData] = useState({
         checkIn: '',
-        checkOut: ''
+        checkOut: '',
     });
 
-    useEffect(() => {
-        axios.get(`/api/listings/${id}`)
-            .then(response => setListing(response.data))
-            .catch(error => console.error('Error fetching listing:', error));
-    }, [id]);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setBookingDetails({ ...bookingDetails, [name]: value });
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('/api/bookings', { ...bookingDetails, listingId: id })
-            .then(response => alert(response.data.message))
-            .catch(error => console.error('Error creating booking:', error));
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Booking Details:', formData);
+        alert('Booking confirmed (mock)!');
     };
-
-    if (!listing) return <p>Loading...</p>;
 
     return (
         <div>
-            <h1>Booking for {listing.title}</h1>
+            <h1>Booking Page for Listing ID: {id}</h1>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Check-in Date:
-                    <input type="date" name="checkIn" value={bookingDetails.checkIn} onChange={handleInputChange} required />
-                </label>
-                <label>
-                    Check-out Date:
-                    <input type="date" name="checkOut" value={bookingDetails.checkOut} onChange={handleInputChange} required />
-                </label>
-                <button type="submit">Book Now</button>
+                <div>
+                    <label>Check-In Date: </label>
+                    <input
+                        type="date"
+                        name="checkIn"
+                        value={formData.checkIn}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div>
+                    <label>Check-Out Date: </label>
+                    <input
+                        type="date"
+                        name="checkOut"
+                        value={formData.checkOut}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <button type="submit">Confirm Booking</button>
             </form>
         </div>
     );

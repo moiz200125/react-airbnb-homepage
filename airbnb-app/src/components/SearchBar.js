@@ -1,47 +1,62 @@
 import React, { useState } from 'react';
-import './SearchBar.css';
-
-const SearchBar = () => {
-  const [location, setLocation] = useState('');
-
-  const handleSearch = () => {
-    alert(`Searching for: ${location}`);
-  };
-
-  return (
-    <div className="search-bar">
-      <input 
-        type="text" 
-        placeholder="Where are you going?" 
-        value={location} 
-        onChange={(e) => setLocation(e.target.value)} 
-      />
-      <button onClick={handleSearch}>Search</button>
-    </div>
-  );
-};
-
-export default SearchBar;
-
+import './SearchBar.css'; // Make sure to define styles in this file.
 
 const SearchBar = ({ onSearch }) => {
-  const handleInputChange = (event) => {
-      onSearch(event.target.value);
-  };
+    const [location, setLocation] = useState('');
 
-  return (
-      <input
-          type="text"
-          placeholder="Search listings..."
-          onChange={handleInputChange}
-          style={{
-              padding: '10px',
-              width: '80%',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
-          }}
-      />
-  );
+    // Handle the change in input field
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setLocation(value);
+
+        // If a parent component passed an `onSearch` prop, call it
+        if (onSearch) {
+            onSearch(value);
+        }
+    };
+
+    // Handle search button click
+    const handleSearch = () => {
+        if (!location.trim()) {
+            alert('Please enter a location to search!');
+            return;
+        }
+        alert(`Searching for: ${location}`);
+    };
+
+    return (
+        <div className="search-bar">
+            {/* Input field for search */}
+            <input
+                type="text"
+                placeholder="Where are you going?"
+                value={location}
+                onChange={handleInputChange}
+                style={{
+                    padding: '10px',
+                    width: '70%',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    marginRight: '10px',
+                }}
+            />
+
+            {/* Search button */}
+            <button
+                onClick={handleSearch}
+                style={{
+                    padding: '10px 20px',
+                    backgroundColor: '#007BFF',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                }}
+            >
+                Search
+            </button>
+        </div>
+    );
 };
 
 export default SearchBar;
