@@ -7,7 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors());   //Middleware
 
 // Static data for property listings
 const listings = [

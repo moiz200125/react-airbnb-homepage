@@ -22,3 +22,26 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+
+
+const SearchBar = ({ onSearch }) => {
+  const handleInputChange = (event) => {
+      onSearch(event.target.value);
+  };
+
+  return (
+      <input
+          type="text"
+          placeholder="Search listings..."
+          onChange={handleInputChange}
+          style={{
+              padding: '10px',
+              width: '80%',
+              borderRadius: '5px',
+              border: '1px solid #ccc',
+          }}
+      />
+  );
+};
+
+export default SearchBar;
