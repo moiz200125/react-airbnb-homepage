@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import axios from 'axios';
 
 const HomePage = () => {
-    // State for managing listings and search results
+    
     const [listings, setListings] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(true); // Loading state for better UX
@@ -21,8 +21,9 @@ const HomePage = () => {
                 setSearchResults(response.data); // Initialize search results with all listings
                 setIsLoading(false);
             })
+           
             .catch((error) => {
-                console.error('Error fetching listings:', error);
+                console.error('Error fetching listings:', error.message);
                 setError('Failed to fetch listings. Please try again later.');
                 setIsLoading(false);
             });
